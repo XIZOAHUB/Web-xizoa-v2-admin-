@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Control - Xizoa</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Login Screen (shown when not authenticated) -->
+  <div id="loginScreen" class="login-screen">
+    <div class="login-card">
+      <h1>🚀 Mission Control</h1>
+      <p>Personal Admin Panel for Xizoa</p>
+      <input type="email" id="loginEmail" placeholder="your@email.com" value="">
+      <button onclick="login()">Login with Cloudflare Access</button>
+      <p class="hint">First login = Auto Admin</p>
+    </div>
+  </div>
+
+  <!-- Main App (shown after auth) -->
+  <div id="app" class="app hidden">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">🚀</span>
+        <span class="brand-text">Mission Control</span>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+          <i class="fas fa-chart-line"></i> Dashboard
+        </a>
+        <a href="#blog" class="nav-item" onclick="showSection('blog')">
+          <i class="fas fa-pen"></i> Blog CMS
+        </a>
+        <a href="#repos" class="nav-item" onclick="showSection('repos')">
+          <i class="fas fa-code-branch"></i> Repos
+        </a>
+        <a href="#analytics" class="nav-item" onclick="showSection('analytics')">
+          <i class="fas fa-chart-bar"></i> Analytics
+        </a>
+        <a href="#users" class="nav-item admin-only hidden" onclick="showSection('users')">
+          <i class="fas fa-users"></i> Users
+        </a>
+        <a href="#settings" class="nav-item admin-only hidden" onclick="showSection('settings')">
+          <i class="fas fa-cog"></i> Settings
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="repo-switcher">
+          <select id="repoSelect" onchange="switchRepo()">
+            <option>Loading repos...</option>
+          </select>
+        </div>
+        <div class="user-info">
+          <span id="userName">User</span>
+          <span id="userRole" class="role-badge">role</span>
+        </div>
+        <button onclick="logout()" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <h2 id="pageTitle">Dashboard</h2>
+        <div class="top-actions">
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Sections -->
+      <div class="content-area">
+        <!-- Dashboard -->
+        <section id="dashboard" class="section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <i class="fas fa-file-alt"></i>
+              <div class="stat-value" id="statPosts">-</div>
+              <div class="stat-label">Total Posts</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-eye"></i>
+              <div class="stat-value" id="statViews">-</div>
+              <div class="stat-label">Page Views</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-dollar-sign"></i>
+              <div class="stat-value" id="statEarnings">-</div>
+              <div class="stat-label">Earnings</div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-code-branch"></i>
+              <div class="stat-value" id="statRepos">-</div>
+              <div class="stat-label">Connected Repos</div>
+            </div>
+          </div>
+          
+          <div class="recent-activity">
+            <h3>Recent Activity</h3>
+            <div id="activityList" class="activity-list">
+              <p>Loading...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Blog CMS -->
+        <section id="blog" class="section">
+          <div class="section-header">
+            <h3>Blog Posts</h3>
+            <button class="btn-primary" onclick="showEditor()">
+              <i class="fas fa-plus"></i> New Post
+            </button>
+          </div>
+          
+          <div id="postsList" class="posts-list">
+            <p>Loading posts...</p>
+          </div>
+        </section>
+
+        <!-- Blog Editor (Overlay) -->
+        <div id="editorOverlay" class="editor-overlay hidden">
+          <div class="editor-container">
+            <div class="editor-header">
+              <input type="text" id="postTitle" placeholder="Post Title">
+              <div class="editor-actions">
+                <button class="btn-secondary" onclick="closeEditor()">Cancel</button>
+                <button class="btn-secondary" onclick="saveDraft()">Save Draft</button>
+                <button class="btn-primary" onclick="publishPost()">Publish</button>
+              </div>
+            </div>
+            
+            <div class="editor-meta">
+              <input type="text" id="postSlug" placeholder="url-slug">
+              <select id="postCategory">
+                <option value="web">Web</option>
+                <option value="python">Python</option>
+                <option value="ai">AI</option>
+                <option value="devops">DevOps</option>
+              </select>
+              <input type="text" id="postTags" placeholder="tag1, tag2, tag3">
+              <input type="text" id="postExcerpt" placeholder="Short excerpt...">
+            </div>
+            
+            <div class="editor-body">
+              <textarea id="postContent" placeholder="Write in Markdown..."></textarea>
+              <div id="postPreview" class="preview-pane"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Repos -->
+        <section id="repos" class="section">
+          <h3>Connected Repositories</h3>
+          <div id="reposList" class="repos-list"></div>
+          
+          <div class="connect-repo">
+            <h4>Connect New Repo</h4>
+            <input type="text" id="newRepoOwner" placeholder="Owner (e.g., XIZOAHUB)">
+            <input type="text" id="newRepoName" placeholder="Repo name (e.g., Web-xizoa-v2)">
+            <button class="btn-primary" onclick="connectRepo()">Connect</button>
+          </div>
+        </section>
+
+        <!-- Analytics -->
+        <section id="analytics" class="section">
+          <h3>Site Analytics</h3>
+          <div id="analyticsData">Loading...</div>
+        </section>
+
+        <!-- Users (Admin Only) -->
+        <section id="users" class="section">
+          <h3>User Management</h3>
+          <button class="btn-primary" onclick="showAddUser()">
+            <i class="fas fa-plus"></i> Add User
+          </button>
+          <div id="usersList" class="users-list"></div>
+        </section>
+
+        <!-- Settings -->
+        <section id="settings" class="section">
+          <h3>Settings</h3>
+          <p>Coming soon...</p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
