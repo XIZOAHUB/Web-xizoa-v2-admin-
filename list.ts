@@ -1,30 +1,50 @@
 /**
- * GET /api/media
- * List media files
+ * GET /api/posts
+ * List all posts/drafts with pagination
  */
 
 import type { Context } from "hono";
 import type { Env } from "../../../config/env";
-import { createMediaService } from "../../../services/media-service";
+import { createPostService } from "../../../services/post-service";
+import { z } from "zod";
 
-export default async function listMediaHandler(c: Context<{ Bindings: Env }>) {
-  const url = new URL(c.req.url);
-  const folder = url.searchParams.get("folder") || undefined;
-  const limit = parseInt(url.searchParams.get("limit") || "50");
-  const offset = parseInt(url.searchParams.get("offset") || "0");
+const QuerySchema = z.object({
+  status: z.enum(["draft", "published", "scheduled"]).optional(),
+  type: z.enum(["post", "page"]).optional().default("post"),
+  page: z.string().transform(Number).optional().default("1"),
+  limit: z.string().transform(Number).optional().default("20"),
+});
 
-  const cdnBase = `https://${c.env.CLOUDFLARE_PAGES_PROJECT}.pages.dev`;
-  const mediaService = createMediaService(c.env.R2_BUCKET, c.env.DB, cdnBase);
+export default async function listPostsHandler(c: Context<{ Bindings: Env }>) {
+  const query = QuerySchema.parse(Object.fromEntries(new URL(c.req.url).searchParams));
 
-  const media = await mediaService.list(folder, limit, offset);
-  const folders = await mediaService.getFolders();
+  const postService = createPostService(c.env.DB);
+  const drafts = await postService.getDrafts(
+    query.status,
+    query.type,
+    query.limit,
+    (query.page - 1) * query.limit
+  );
 
   return c.json({
     success: true,
-    data: {
-      media,
-      folders,
-      pagination: { limit, offset },
+    data: drafts.map((d) => ({
+      id: d.id,
+      title: d.title,
+      slug: d.slug,
+      excerpt: d.excerpt,
+      status: d.status,
+      category: d.category,
+      tags: JSON.parse(d.tags || "[]"),
+      featuredImage: d.featuredImage,
+      publishedAt: d.publishedAt ? new Date(d.publishedAt * 1000).toISOString() : null,
+      updatedAt: new Date(d.updatedAt * 1000).toISOString(),
+      type: d.type,
+    })),
+    pagination: {
+      page: query.page,
+      limit: query.limit,
+      total: drafts.length, // TODO: get actual count
     },
   });
 }
