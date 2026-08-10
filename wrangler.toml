@@ -1,0 +1,45 @@
+name = "web-xizoa-v2-admin"
+main = "functions/_middleware.ts"
+compatibility_date = "2026-08-10"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = "./frontend/dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "xizoa-db"
+database_id = "TUJHA_D1_DATABASE_ID_YAHAN_DAL"
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "xizoa-media"
+
+[[kv_namespaces]]
+binding = "KV_SESSIONS"
+id = "TUJHA_KV_SESSIONS_ID_YAHAN_DAL"
+
+[[kv_namespaces]]
+binding = "KV_RATE_LIMIT"
+id = "TUJHA_KV_RATE_LIMIT_ID_YAHAN_DAL"
+
+[vars]
+GITHUB_ALLOWED_USER = "Priyanshu maurya"
+GITHUB_REPO_OWNER = "Priyanshu maurya"
+GITHUB_REPO_NAME = "web-xizoa-v2"
+GITHUB_BRANCH = "main"
+CLOUDFLARE_ACCOUNT_ID = "f6425ef2f5876635b9742f5ddb854d4f"
+CLOUDFLARE_PAGES_PROJECT = "web-xizoa-v2-admin"
+R2_BUCKET = "xizoa-media"
+
+# Secrets (yeh wrangler.toml mein nahi likhne — sirf Cloudflare Dashboard mein add karne):
+# GITHUB_CLIENT_ID
+# GITHUB_CLIENT_SECRET
+# GITHUB_TOKEN
+# CLOUDFLARE_API_TOKEN
+# SESSION_SECRET
+# CSRF_SECRET
+# ENCRYPTION_KEY
+
+[triggers]
+crons = ["* * * * *"]

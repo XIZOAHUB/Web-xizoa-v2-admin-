@@ -1,0 +1,21 @@
+{
+  "name": "xizoa-cms",
+  "version": "1.0.0",
+  "description": "Git-native CMS for Xizoa",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 execute xizoa-db --file=./database/migrations/001_initial.sql",
+    "db:seed": "wrangler d1 execute xizoa-db --file=./database/seeds/default_settings.sql"
+  },
+  "dependencies": {
+    "hono": "^4.5.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240806.0",
+    "typescript": "^5.5.0",
+    "wrangler": "^3.68.0"
+  }
+}
