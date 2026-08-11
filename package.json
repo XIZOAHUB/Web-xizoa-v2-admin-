@@ -19,7 +19,9 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
-    "remark-html": "^16.0.1"
+    "remark-html": "^16.0.1",
+    "hono": "^4.0.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
