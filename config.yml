@@ -1,0 +1,29 @@
+baseURL: 'https://web-xizoa-v2-admin.pages.dev'
+languageCode: 'en-us'
+title: 'Xizoa Blog'
+theme: 'default'
+
+params:
+  author: 'Priyanshu Maurya'
+  description: 'Building in public. Solopreneur journey.'
+  social:
+    github: 'https://github.com/Priyanshu-maurya'
+
+permalinks:
+  posts: '/:slug/'
+  pages: '/:slug/'
+
+menu:
+  main:
+    - name: 'Home'
+      url: '/'
+      weight: 10
+    - name: 'About'
+      url: '/about/'
+      weight: 20
+    - name: 'Now'
+      url: '/now/'
+      weight: 30
+
+pagination:
+  pagerSize: 10
