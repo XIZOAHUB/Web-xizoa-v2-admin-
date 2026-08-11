@@ -10,7 +10,7 @@ export default function Editor() {
   const navigate = useNavigate()
   const store = useEditorStore()
   const [activeTab, setActiveTab] = useState<'editor' | 'settings'>('editor')
-  const [publishing, setPublishing] = useState(false)
+  const [publishing] = useState(false);
 
   // Load existing post if editing
   useEffect(() => {
