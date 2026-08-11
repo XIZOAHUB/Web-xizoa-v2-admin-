@@ -4,7 +4,7 @@ import StatCard from '../components/dashboard/StatCard'
 import { usePosts } from '../hooks/usePosts'
 
 export default function Dashboard() {
-  const { posts } = usePosts()
+  const { posts, loading, error } = usePosts()
   
   // Abhi UI ko advanced dikhane ke liye hum temporary mock data use kar rahe hain
   // API theek hote hi ye real data fetch karne lagega
@@ -20,8 +20,8 @@ export default function Dashboard() {
     { id: 3, message: 'Setup Cloudflare Pages config', hash: 'f247ef3', time: '2 hours ago' },
   ]);
 
-  const publishedCount = posts.filter(p => p.status === 'published').length
-  const draftCount = posts.filter(p => p.status === 'draft').length
+  const publishedCount = loading ? 0 : posts.filter(p => p.status === 'published').length
+  const draftCount = loading ? 0 : posts.filter(p => p.status === 'draft').length
 
   return (
     <div className="space-y-6">
@@ -41,19 +41,19 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Posts"
-          value={posts.length}
+          value={loading ? '—' : posts.length}
           icon={<FileText className="w-6 h-6" />}
           color="primary"
         />
         <StatCard
           title="Published"
-          value={publishedCount}
+          value={loading ? '—' : publishedCount}
           icon={<Zap className="w-6 h-6" />}
           color="green"
         />
         <StatCard
           title="Drafts"
-          value={draftCount}
+          value={loading ? '—' : draftCount}
           icon={<Clock className="w-6 h-6" />}
           color="orange"
         />
@@ -75,7 +75,9 @@ export default function Dashboard() {
               <FileText className="w-5 h-5 text-primary-500" />
               Recent Posts
             </h3>
-            {posts.length === 0 ? (
+            {loading ? (
+              <div className="p-8 text-center text-gray-500">Loading posts...</div>
+            ) : posts.length === 0 ? (
               <div className="text-center py-12 border-2 border-dashed border-gray-200 dark:border-dark-800 rounded-lg">
                 <p className="text-gray-500 dark:text-gray-400">No posts yet. Create your first post!</p>
               </div>
