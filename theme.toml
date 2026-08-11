@@ -1,0 +1,8 @@
+name = "Xizoa Default"
+description = "Minimal theme for Xizoa CMS"
+homepage = "https://xizoa.com"
+license = "MIT"
+min_version = "0.131.0"
+
+[author]
+  name = "Priyanshu Maurya"
