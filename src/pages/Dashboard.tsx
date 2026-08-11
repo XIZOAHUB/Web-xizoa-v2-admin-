@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { FileText, Clock, Image, Zap, Github, Server, Database, Activity, CheckCircle2, CloudLightning } from 'lucide-react'
+import { useState } from 'react'
+import { FileText, Clock, Zap, Github, Server, Database, Activity, CheckCircle2, CloudLightning } from 'lucide-react'
 import StatCard from '../components/dashboard/StatCard'
 import { usePosts } from '../hooks/usePosts'
 
@@ -68,7 +68,7 @@ export default function Dashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Left Column: Recent Posts (Takes up 2 columns on large screens) */}
+        {/* Left Column: Recent Posts */}
         <div className="lg:col-span-2 space-y-6">
           <div className="card p-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
@@ -106,7 +106,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Right Column: Advanced Widgets (Cloudflare, GitHub, Storage) */}
+        {/* Right Column: Advanced Widgets */}
         <div className="space-y-6">
           
           {/* Deploy Status Widget */}
