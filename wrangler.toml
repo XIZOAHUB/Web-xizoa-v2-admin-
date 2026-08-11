@@ -9,7 +9,7 @@ bucket = "./frontend/dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "xizoa-db"
-database_id = "TUJHA_D1_DATABASE_ID_YAHAN_DAL"
+database_id = "79f79c93-f3b5-4ca3-8bdc-4a38efe9b1fb"
 
 [[r2_buckets]]
 binding = "R2_BUCKET"
@@ -17,11 +17,11 @@ bucket_name = "xizoa-media"
 
 [[kv_namespaces]]
 binding = "KV_SESSIONS"
-id = "TUJHA_KV_SESSIONS_ID_YAHAN_DAL"
+id = "28347f7e611e4d68a2e906126aae9126"
 
 [[kv_namespaces]]
 binding = "KV_RATE_LIMIT"
-id = "TUJHA_KV_RATE_LIMIT_ID_YAHAN_DAL"
+id = "48206b1b81634a0f978c869981442919"
 
 [vars]
 GITHUB_ALLOWED_USER = "Priyanshu maurya"
