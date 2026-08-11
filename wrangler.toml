@@ -1,10 +1,8 @@
 name = "web-xizoa-v2-admin"
-main = "functions/_middleware.ts"
 compatibility_date = "2026-08-10"
 compatibility_flags = ["nodejs_compat"]
 
-[site]
-bucket = "./frontend/dist"
+pages_build_output_dir = "./dist"
 
 [[d1_databases]]
 binding = "DB"
@@ -30,18 +28,3 @@ GITHUB_REPO_NAME = "web-xizoa-v2"
 GITHUB_BRANCH = "main"
 CLOUDFLARE_ACCOUNT_ID = "f6425ef2f5876635b9742f5ddb854d4f"
 CLOUDFLARE_PAGES_PROJECT = "web-xizoa-v2-admin"
-R2_BUCKET = "xizoa-media"
-
-# Secrets (yeh wrangler.toml mein nahi likhne — sirf Cloudflare Dashboard mein add karne):
-# GITHUB_CLIENT_ID
-# GITHUB_CLIENT_SECRET
-# GITHUB_TOKEN
-# CLOUDFLARE_API_TOKEN
-# SESSION_SECRET
-# CSRF_SECRET
-# ENCRYPTION_KEY
-
-pages_build_output_dir = "dist"
-
-[triggers]
-crons = ["* * * * *"]
