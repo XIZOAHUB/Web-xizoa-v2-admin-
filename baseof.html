@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .Title }}{{ .Title }} | {{ end }}{{ .Site.Title }}</title>
+  <meta name="description" content="{{ .Params.meta_description | default .Params.excerpt | default .Site.Params.description }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ .Params.meta_title | default .Title }}">
+  <meta property="og:description" content="{{ .Params.meta_description | default .Params.excerpt }}">
+  <meta property="og:type" content="{{ if eq .Type "post" }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{ with .Params.featured_image }}<meta property="og:image" content="{{ . }}">{{ end }}
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ .Params.meta_title | default .Title }}">
+  <meta name="twitter:description" content="{{ .Params.meta_description | default .Params.excerpt }}">
+  {{ with .Params.featured_image }}<meta name="twitter:image" content="{{ . }}">{{ end }}
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "{{ if eq .Type "post" }}BlogPosting{{ else }}WebPage{{ end }}",
+    "headline": "{{ .Title }}",
+    "description": "{{ .Params.meta_description | default .Params.excerpt }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ .Site.Params.author }}"
+    },
+    "datePublished": "{{ .Date }}",
+    "dateModified": "{{ .Lastmod }}",
+    {{ with .Params.featured_image }}"image": "{{ . }}",{{ end }}
+    "url": "{{ .Permalink }}"
+  }
+  </script>
+
+  <link rel="canonical" href="{{ .Params.canonical_url | default .Permalink }}">
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#fafafa;--fg:#1a1a1a;--muted:#666;--accent:#0ea5e9;--border:#e5e5e5;--surface:#fff}
+    @media (prefers-color-scheme:dark){:root{--bg:#0f172a;--fg:#f1f5f9;--muted:#94a3b8;--accent:#38bdf8;--border:#1e293b;--surface:#1e293b}}
+    html{font-family:system-ui,-apple-system,sans-serif;line-height:1.6}
+    body{background:var(--bg);color:var(--fg);min-height:100vh}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    img{max-width:100%;height:auto}
+    .container{max-width:720px;margin:0 auto;padding:0 1.5rem}
+    header{padding:2rem 0;border-bottom:1px solid var(--border);margin-bottom:2rem}
+    header .container{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .logo{font-size:1.5rem;font-weight:800;color:var(--fg)}
+    nav{display:flex;gap:1.5rem}
+    nav a{color:var(--muted);font-size:.875rem;font-weight:500}
+    nav a:hover{color:var(--fg)}
+    main{min-height:calc(100vh - 200px)}
+    article{padding-bottom:4rem}
+    .post-header{margin-bottom:2rem}
+    .post-title{font-size:2.25rem;font-weight:800;line-height:1.2;margin-bottom:.75rem;letter-spacing:-.025em}
+    .post-meta{color:var(--muted);font-size:.875rem;display:flex;gap:1rem;flex-wrap:wrap}
+    .post-meta span{display:flex;align-items:center;gap:.25rem}
+    .post-content{font-size:1.125rem;line-height:1.75}
+    .post-content h2{font-size:1.5rem;font-weight:700;margin:2rem 0 1rem}
+    .post-content h3{font-size:1.25rem;font-weight:600;margin:1.5rem 0 .75rem}
+    .post-content p{margin-bottom:1.25rem}
+    .post-content ul,.post-content ol{margin:1rem 0 1.25rem 1.5rem}
+    .post-content li{margin-bottom:.5rem}
+    .post-content blockquote{border-left:3px solid var(--accent);padding-left:1rem;margin:1.5rem 0;color:var(--muted)}
+    .post-content pre{background:var(--surface);padding:1rem;border-radius:.5rem;overflow-x:auto;margin:1.5rem 0;font-size:.875rem}
+    .post-content code{background:var(--surface);padding:.15rem .4rem;border-radius:.25rem;font-size:.9em}
+    .post-content pre code{padding:0;background:none}
+    .post-content img{border-radius:.5rem;margin:1.5rem 0}
+    .post-content a{color:var(--accent)}
+    .post-list{display:flex;flex-direction:column;gap:2rem}
+    .post-item{padding-bottom:2rem;border-bottom:1px solid var(--border)}
+    .post-item:last-child{border-bottom:none}
+    .post-item h2{font-size:1.5rem;font-weight:700;margin-bottom:.5rem}
+    .post-item h2 a{color:var(--fg)}
+    .post-item h2 a:hover{color:var(--accent);text-decoration:none}
+    .post-item .excerpt{color:var(--muted);margin-top:.5rem}
+    .post-item .read-more{display:inline-flex;align-items:center;gap:.25rem;margin-top:1rem;font-weight:500;font-size:.875rem}
+    .tags{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+    .tag{font-size:.75rem;padding:.25rem .5rem;background:var(--surface);border-radius:9999px;color:var(--muted)}
+    footer{padding:2rem 0;border-top:1px solid var(--border);margin-top:4rem;text-align:center;color:var(--muted);font-size:.875rem}
+    .pagination{display:flex;justify-content:center;gap:1rem;margin-top:3rem}
+    .pagination a{padding:.5rem 1rem;background:var(--surface);border-radius:.5rem;font-size:.875rem}
+    @media (max-width:640px){.post-title{font-size:1.75rem}.post-content{font-size:1rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="/" class="logo">{{ .Site.Title }}</a>
+      <nav>
+        {{ range .Site.Menus.main }}
+        <a href="{{ .URL }}">{{ .Name }}</a>
+        {{ end }}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer>
+    <div class="container">
+      <p>{{ .Site.Params.author }} — Built with Xizoa CMS</p>
+    </div>
+  </footer>
+</body>
+</html>
