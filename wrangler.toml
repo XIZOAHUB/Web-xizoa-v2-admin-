@@ -9,10 +9,6 @@ binding = "DB"
 database_name = "xizoa-db"
 database_id = "79f79c93-f3b5-4ca3-8bdc-4a38efe9b1fb"
 
-[[r2_buckets]]
-binding = "R2_BUCKET"
-bucket_name = "xizoa-media"
-
 [[kv_namespaces]]
 binding = "KV_SESSIONS"
 id = "28347f7e611e4d68a2e906126aae9126"
