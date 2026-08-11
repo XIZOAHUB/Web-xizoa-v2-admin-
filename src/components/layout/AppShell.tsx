@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import TopBar from './TopBar'
+import { Outlet } from "react-router-dom"; // or maybe a combined import
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
