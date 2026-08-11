@@ -41,5 +41,7 @@ R2_BUCKET = "xizoa-media"
 # CSRF_SECRET
 # ENCRYPTION_KEY
 
+pages_build_output_dir = "dist"
+
 [triggers]
 crons = ["* * * * *"]
