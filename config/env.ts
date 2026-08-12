@@ -2,6 +2,7 @@
  * Environment variable loader
  * Validates that all required env vars are present
  */
+import type { D1Database, R2Bucket, KVNamespace } from "@cloudflare/workers-types";
 
 export interface Env {
   // Cloudflare Bindings
