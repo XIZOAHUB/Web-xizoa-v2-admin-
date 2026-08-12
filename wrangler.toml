@@ -2,9 +2,8 @@ name = "web-xizoa-v2-admin"
 compatibility_date = "2026-08-12"
 compatibility_flags = ["nodejs_compat"]
 
-# ✅ SPA Routing Fix - _redirects file bhi chahiye
-[site]
-bucket = "./frontend/dist"           # ✅ SAHI - frontend/dist pe point karo
+# ✅ Pages ke liye yeh line chahiye
+pages_build_output_dir = "./frontend/dist"
 
 [[d1_databases]]
 binding = "DB"
