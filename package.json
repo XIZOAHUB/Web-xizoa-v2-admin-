@@ -1,8 +1,15 @@
 {
-  "name": "xizoa-cms-root",
+  "name": "web-xizoa-v2-admin",
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "build": "cd frontend && npm install --legacy-peer-deps && npm run build"
+    "build": "npm install && cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "hono": "^4.5.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240806.0",
+    "typescript": "^5.5.4"
   }
 }
